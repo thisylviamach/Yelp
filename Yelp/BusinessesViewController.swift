@@ -9,21 +9,23 @@
 import UIKit
 import AFNetworking
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     var businesses: [Business]!
+    let searchBar = UISearchBar()
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        searchBar = UISearchBar()
-//        searchBar.sizeToFit()
-//        navigationItem.titleView = searchBar
+        
+        searchBar.sizeToFit()
+        navigationItem.titleView = searchBar
         
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
         
@@ -55,6 +57,16 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
          }
          */
         
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
